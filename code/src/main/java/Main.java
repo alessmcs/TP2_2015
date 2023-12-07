@@ -1,5 +1,7 @@
 import edu.stanford.nlp.ling.*;
 import edu.stanford.nlp.pipeline.*;
+
+import java.awt.*;
 import java.io.*;
 
 import java.io.IOException;
@@ -43,6 +45,11 @@ public class Main {
         while ((line = br.readLine()) != null) {
             //String correctLine = TraitementDeTexte.correction(line);
             //listeCorrige.add(correctLine);
+        }
+
+        String bonjour = "je m appele Oceane";
+        for(String mot: bonjour.split(" ") ){
+            System.out.println(WordMap.hashCode(mot)%133);
         }
     }
 
