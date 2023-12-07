@@ -1,2 +1,2 @@
-public class FileMaps {
+public class FileMaps<k, v> {
 }

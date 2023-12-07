@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class WordMap<K,V> extends ChainHashMap<String,FileMap<String, V>> {
+public class WordMap<K,V> extends ChainHashMap<String, Integer> {
 
     // K -> mot & V -> ref à FileMap
 
@@ -22,17 +22,14 @@ public class WordMap<K,V> extends ChainHashMap<String,FileMap<String, V>> {
     }
 
     private void resize( int newCap ) {
-        ArrayList<Entry<String,FileMap<String, V>>> buffer = new ArrayList<>();
-        for( Entry<String, FileMap<String, V>> e : this.entrySet() )
+        ArrayList<Entry<String,Integer>> buffer = new ArrayList<>();
+        for( Entry<String, Integer> e : this.entrySet() )
             buffer.add( e );
         this.capacity = newCap;
         this.createTable(); // based on updated capacity
         this.n = 0; // wil be recomputed while reinserting entries
-        for( Entry<String,FileMap<String, V>> e : buffer )
+        for( Entry<String,Integer> e : buffer )
             put((String) e.getKey(), e.getValue());
     }
-
-
-
 
 }

@@ -20,10 +20,17 @@ public class Main {
 //            listeCorrige.add(correctLine);
         }
 
+        ChainHashMap<String, Integer> myMap = new ChainHashMap<>();
+
         // test sur le premier fichier 900.txt
+        int i = 0;
         for(String mot: texteTraitee.get(0)){
             System.out.println(mot + ": " + WordMap.hashValue(mot));
+            int index = i;
+            myMap.put(mot, i);
+            i++;
         }
+        System.out.println(myMap);
 
         // to map the values, create key/value pairs and THEN put them in the maps
     }
