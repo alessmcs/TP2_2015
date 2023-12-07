@@ -1,5 +1,9 @@
 import edu.stanford.nlp.ling.*;
 import edu.stanford.nlp.pipeline.*;
+import java.io.*;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Properties;
 public class Main {
 //    public static String text = "Joe Smith wasn't born in California. " +
@@ -28,5 +32,18 @@ public class Main {
 //                    tok.word(), tok.lemma()));
 //        }
 //    }
+
+    public static void main(String[] args) throws IOException {
+        ArrayList<String[]> texteTraitee = TraitementDeTexte.traiterText("src/main/dataset");
+
+
+        BufferedReader br = new BufferedReader(new FileReader("src/main/query.txt"));
+        ArrayList<String> listeCorrige = new ArrayList<>();
+        String line;
+        while ((line = br.readLine()) != null) {
+            //String correctLine = TraitementDeTexte.correction(line);
+            //listeCorrige.add(correctLine);
+        }
+    }
 
 }
