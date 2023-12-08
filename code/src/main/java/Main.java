@@ -49,9 +49,8 @@ public class Main {
         int i = 0;
 
         for (String nom : nomsFichiers) {
-            int fileIndex = 0; // Reset index for each file
-
-            for (String mot : texteTraitee.get(fileIndex)) {
+            int fileIndex = 0;
+            for (String mot : texteTraitee.get(nomsFichiers.indexOf(nom))) {
                 if (myMap.containsKey(mot)) {
                     FileMaps<String, ArrayList<Integer>> myMap2 = myMap.get(mot);
                     if (myMap2.containsKey(nom)) {
@@ -61,11 +60,12 @@ public class Main {
                     }
                 } else {
                     FileMaps<String, ArrayList<Integer>> fileMap = new FileMaps<>();
-                    ArrayList<Integer> positions = new ArrayList<>(Arrays.asList(fileIndex));
+                    ArrayList<Integer> positions = new ArrayList<>();
+                    positions.add(fileIndex);
                     fileMap.put(nom, positions);
                     myMap.put(mot, fileMap);
                 }
-                fileIndex++; 
+                fileIndex++;
             }
             i++;
         }
@@ -96,4 +96,5 @@ public class Main {
 //            }
 //    }
 
-}}
+}
+}
