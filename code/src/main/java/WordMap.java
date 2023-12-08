@@ -14,10 +14,6 @@ public class WordMap<K,V> extends ChainHashMap<String, FileMaps<String, ArrayLis
 
     private UnsortedTableMap<String,FileMaps<String, ArrayList<Integer>>>[] table; // initialized in createTable
 
-//    public WordMap() { super(); }
-//    public WordMap( int cap ) { super( cap ); }
-//    public WordMap( int cap, int p ) { super( cap, p ); }
-
     public WordMap( int cap, int p ) {
         this.prime = p;
         this.capacity = cap;

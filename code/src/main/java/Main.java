@@ -22,32 +22,8 @@ public class Main {
 //            String correctLine = TraitementDeTexte.correction(line);
 //            listeCorrige.add(correctLine);
         }
-//        int j = 0;
-//        WordMap<String, Integer> myMap = new WordMap<>(331,57);
-//        int i = 0;
-//
-//        for (String nom : nomsFichiers) {
-//            for(String mot: texteTraitee.get(i)){
-//                if (myMap.containsKey(mot)){
-//                    FileMaps<String, ArrayList<Integer>> myMap2 = myMap.get(mot);
-//
-//                    if(myMap2.containsKey(nom)){ // si le nom du fichier existe
-//                        myMap2.get(nom).add(i);
-//                    } else {
-//                        myMap2.put(nom,new ArrayList<>(Arrays.asList(i)) );
-//                    }
-//                } else {
-//                    myMap.put(mot, new FileMaps<String, ArrayList<Integer>>());
-//                    FileMaps<String, ArrayList<Integer>> myMap2 = myMap.get(mot);
-//                    myMap2.put(nom,new ArrayList<>(Arrays.asList(i)) );
-//                }
-//                i++;
-//            }
-//        }
 
         WordMap<String, FileMaps<String, ArrayList<Integer>>> myMap = new WordMap<>(331, 57);
-        int i = 0;
-
         for (String nom : nomsFichiers) {
             int fileIndex = 0;
             for (String mot : texteTraitee.get(nomsFichiers.indexOf(nom))) {
@@ -67,9 +43,9 @@ public class Main {
                 }
                 fileIndex++;
             }
-            i++;
         }
 
+        // afficher la rep pour vérifier WordMap & FileMap
         for (String key : myMap.keySet()) {
             System.out.println(key); // mot
             for(String key2 : myMap.get(key).keySet() ){
@@ -77,24 +53,6 @@ public class Main {
             }
         }
 
-//        WordMap<String, Integer> myMap = new WordMap<>(331,57);
-//        int i = 0; //index dans le string
-//        for(String mot: texteTraitee.get(0)){
-//            if (myMap.containsKey(mot)){
-//                FileMaps<String, ArrayList<Integer>> myMap2 = myMap.get(mot);
-//                myMap2.get("900.txt").add(i);
-//            } else {
-//                myMap.put(mot, new FileMaps<String, ArrayList<Integer>>());
-//                FileMaps<String, ArrayList<Integer>> myMap2 = myMap.get(mot);
-//                myMap2.put("900.txt",new ArrayList<>(Arrays.asList(i)) );
-//            }
-//            i++;
-//        }
-//
-//        for (String key : myMap.keySet()) {
-//                System.out.println(key + ", " + myMap.get(key).get("900.txt"));
-//            }
-//    }
 
 }
 }
