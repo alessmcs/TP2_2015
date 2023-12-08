@@ -5,6 +5,8 @@ import java.io.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Main {
 
 
@@ -20,19 +22,28 @@ public class Main {
 //            listeCorrige.add(correctLine);
         }
 
-        ChainHashMap<String, Integer> myMap = new ChainHashMap<>();
-
+        String nomFichier = "900.txt";
         // test sur le premier fichier 900.txt
-        int i = 0;
+        WordMap<String, Integer> myMap = new WordMap<>();
+        int i = 0; //index dans le string
         for(String mot: texteTraitee.get(0)){
             System.out.println(mot + ": " + WordMap.hashValue(mot));
-            int index = i;
-            myMap.put(mot, i);
+            if (myMap.containsKey(mot)){
+                FileMaps<String, ArrayList<Integer>> myMap2 = myMap.get(mot);
+                myMap2.get(nomFichier).add(i);
+            } else {
+                myMap.put(mot, new FileMaps<String, ArrayList<Integer>>());
+                FileMaps<String, ArrayList<Integer>> myMap2 = myMap.get(mot);
+                myMap2.put(nomFichier,new ArrayList<>(Arrays.asList(i)) );
+            }
+            System.out.println(mot + " , " + myMap.get(mot).get(nomFichier).toString());
             i++;
         }
-        System.out.println(myMap);
 
-        // to map the values, create key/value pairs and THEN put them in the maps
+//        for (String key : myMap.keySet()) {
+//            System.out.println(key);
+//        }
+
     }
 
 }
