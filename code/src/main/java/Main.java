@@ -8,11 +8,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
+    public static ArrayList<String[]> texteTraitee = new ArrayList<>();
+    public static ArrayList<String> nomsFichiers = new ArrayList<>();
 
+    public static WordMap<String, FileMaps<String, ArrayList<Integer>>> myMap = new WordMap<>(331, 57);
 
     public static void main(String[] args) throws IOException {
-        ArrayList<String[]> texteTraitee = TraitementDeTexte.traiterText("src/main/dataset");
-        ArrayList<String> nomsFichiers = TraitementDeTexte.nomFichier("src/main/dataset");
+        texteTraitee = TraitementDeTexte.traiterText("src/main/dataset");
+        nomsFichiers = TraitementDeTexte.nomFichier("src/main/dataset");
 
         BufferedReader br = new BufferedReader(new FileReader("src/main/query.txt"));
         ArrayList<String> listeCorrige = new ArrayList<>();
@@ -23,7 +26,8 @@ public class Main {
 //            listeCorrige.add(correctLine);
         }
 
-        WordMap<String, FileMaps<String, ArrayList<Integer>>> myMap = new WordMap<>(331, 57);
+        int i = 0;
+
         for (String nom : nomsFichiers) {
             int fileIndex = 0;
             for (String mot : texteTraitee.get(nomsFichiers.indexOf(nom))) {
@@ -43,9 +47,10 @@ public class Main {
                 }
                 fileIndex++;
             }
+            i++;
         }
 
-        // afficher la rep pour vérifier WordMap & FileMap
+        //todo: effacer prints
         for (String key : myMap.keySet()) {
             System.out.println(key); // mot
             for(String key2 : myMap.get(key).keySet() ){
@@ -54,5 +59,37 @@ public class Main {
         }
 
 
-}
+
+    }
+
+    public static String search(String requete){
+
+        double[] tfidf = new double[nomsFichiers.size()];
+
+        String[] motsRequete = requete.split(" ");
+
+        for(String nom : nomsFichiers){
+            double somme = 0;
+            for(String mot : motsRequete){
+                double val = TD_IDF.tdidf(mot, nom);
+                somme += val;
+            }
+            tfidf[nomsFichiers.indexOf(nom)] = somme;
+        }
+
+        // find the best value for the word planet
+        double maxVal = tfidf[0];
+        int index = 0;
+        // find the max value
+        for (int j = 1; j < tfidf.length; j++) {
+            if (tfidf[j] > maxVal) {
+                maxVal = tfidf[j];
+                index = j;
+            }
+        }
+
+        //TODO: effacer print statement
+        System.out.println("Le fichier est : " + nomsFichiers.get(index));
+        return nomsFichiers.get(index);
+    }
 }

@@ -58,15 +58,17 @@ public class TraitementDeTexte {
         return noms;
     }
 
-    public void distanceLevenshtein(String fichier){
+    public void distanceLevenshtein(String mot, String cible){
 
     }
 
-    public static void  correction(String line){
-        ArrayList<String> tabFaux = new ArrayList<>();
-        String unMot = Arrays.toString(line.split(""));
-        tabFaux.add(unMot);
+    public static void  correction(String mots){
+        String[] tabFaux = mots.split(" "); //<word1><space><word2><space>....
         for (String mot : tabFaux) {
+            // for each word, calcule distance de levenstein
+            // keep the words with the smallest value & trie en ordre lexicographique (arraylist)
+            Map<String, Integer> myMap = new ChainHashMap<>();
+
 
         }
     }
