@@ -19,7 +19,7 @@ public abstract class AbstractSortedMap<K,V> extends AbstractMap<K,V> implements
     // construct with given comparator
     protected AbstractSortedMap( Comparator<K> c ) { this.comp = c; }
     // construct with default comparator using natural ordering
-    //protected AbstractSortedMap() { this( new DefaultComparator<K>() ); }
+    protected AbstractSortedMap() { this( new DefaultComparator<K>() ); }
 
     // compare two entries using keys
     protected int compare( Entry<K,V> a, Entry<K,V> b ) {

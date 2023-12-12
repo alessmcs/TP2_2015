@@ -19,9 +19,11 @@ import java.util.Comparator;
 public class SortedTableMap<K,V> extends AbstractSortedMap<K,V> {
     // physical storage for the map entries
     private ArrayList<MapEntry<K,V>> table = new ArrayList<>();
+    private ArrayList<Integer> tableOfKeys = new ArrayList<>();
+
 
     // construct an initially empty map
-    //public SortedTableMap() { super(); }
+    public SortedTableMap() { super(); }
     public SortedTableMap( Comparator<K> comp ) { super( comp ); }
 
     // private utilities
@@ -37,6 +39,7 @@ public class SortedTableMap<K,V> extends AbstractSortedMap<K,V> {
         else if( comp < 0 ) return findIndex( key, low, mid - 1 ); // search left of mid
         else return findIndex( key, mid + 1, high ); //search right of mid
     }
+
     // interface to search the entire table
     private int findIndex( K key ) { return findIndex( key, 0, this.table.size() - 1 ); }
 
@@ -50,16 +53,24 @@ public class SortedTableMap<K,V> extends AbstractSortedMap<K,V> {
         if( j == this.size() || compare( key, this.table.get( j ) ) != 0 ) return null; // no match
         return this.table.get( j ).getValue();
     }
+
+
     // check if an entry with given key exists
     public boolean containsKey( K key ) { return this.findIndex( key ) < this.size(); }
     // associate the pair key-value, replacing existing value if any
     public V put( K key, V value ) {
         int j = this.findIndex( key );
-        if( j < this.size() && compare( key, this.table.get( j ) ) == 0 ) // match exists
+        if( j < this.size() && compare( key, this.table.get(j) ) == 0 ) // match exists
             return this.table.get( j ).setValue( value );
         this.table.add( j, new MapEntry<K,V>( key, value ) ); // otherwise add new entry
+        this.tableOfKeys.add((Integer) key); // ADDED LINE
         return null;
     }
+
+    // Nouvelle méthode pour accéder aux keys plus facilement
+    public boolean containsKeyDirectly( int key ) { return tableOfKeys.contains(key); }
+
+
     // remove the entry with specified key, if any, return its value
     public V remove( K key ) {
         int j = findIndex( key );

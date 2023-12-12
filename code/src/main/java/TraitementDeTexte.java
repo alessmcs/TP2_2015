@@ -4,6 +4,8 @@ import edu.stanford.nlp.ling.*;
 import edu.stanford.nlp.pipeline.*;
 import java.util.*;
 
+import static edu.stanford.nlp.util.StringUtils.editDistance;
+
 public class TraitementDeTexte {
 
     public static ArrayList<String[]> traiterText(String dir) throws IOException {
@@ -58,20 +60,32 @@ public class TraitementDeTexte {
         return noms;
     }
 
-    public void distanceLevenshtein(String mot, String cible){
-
-    }
-
-    public static void  correction(String mots){
-        String[] tabFaux = mots.split(" "); //<word1><space><word2><space>....
+    public static String[] correction(String[] mots){
+        String[] tabFaux = mots;
+        int i = 0;
+        // Create a sortedTableMap
         for (String mot : tabFaux) {
-            // for each word, calcule distance de levenstein
-            // keep the words with the smallest value & trie en ordre lexicographique (arraylist)
-            Map<String, Integer> myMap = new ChainHashMap<>();
+            SortedTableMap<Integer, ArrayList<String>> mapsIndices = new SortedTableMap<>();
+            for (String cle : Main.myMap.keySet() ){
+                // pour chaque mot, calculer la distance de levenshtein et le mettre dans la liste
+                int dist = editDistance(mot, cle); // utiliser la méthode intégrée dans CoreNLP
+                boolean contains = false;
+                contains = mapsIndices.containsKeyDirectly(dist);
+                if(contains){
+                    mapsIndices.get(dist).add(cle);
+                } else {
+                    mapsIndices.put(dist, new ArrayList<>());
+                    mapsIndices.get(dist).add(cle);
 
-
+                }
+            }
+            // prendre le premier (smallest) elem des indices
+            ArrayList<String> index = mapsIndices.firstEntry().getValue(); // arraylist des mots
+            index.sort(Comparator.naturalOrder()); // sort the inner arrayList
+            String remplacement = index.get(0); // closest word to the misspelled word
+            tabFaux[i] = remplacement;
+            i++;
         }
+        return tabFaux; // retourner le tableau de mots corrigés
     }
-
-
 }

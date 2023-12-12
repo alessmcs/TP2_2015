@@ -1,30 +1,36 @@
 import java.util.ArrayList;
 
-public class TD_IDF {
+public class TF_IDF {
 
+    private static ArrayList<String> nomsFichiers = new ArrayList<>();
 
-    // Calculer TD
-    // count(w) & totalW
+    private static ArrayList<String[]> texteTraitee = new ArrayList<>();
+
+    public static void setListes(ArrayList<String> fichiers, ArrayList<String[]> texte){
+        nomsFichiers = fichiers;
+        texteTraitee = texte;
+    }
+
+    // Calculer TF
     public static double tf(double countW, double totalW){
         return countW / totalW;
     }
 //
 //    // Calculer IDF
-    // count(d,w)
     public static double idf(double totalD, double countDW){
         return 1 + Math.log((1 + totalD)/(1+countDW));
     }
 //
     // Calculer TD-IDF
-    public static double tdidf(String word, String fileName){
+    public static double tfidf(String word, String fileName){
         int[] occurences = count(word, fileName);
         int countW = occurences[0];
         int countDW = occurences[1];
 
-        int index = Main.nomsFichiers.indexOf(fileName);
+        int index = nomsFichiers.indexOf(fileName);
 
-        int totalD = Main.nomsFichiers.size(); // nombre de fichiers
-        int totalW = Main.texteTraitee.get(index).length; // nombre de mots dans le fichier qu'on regarde actuellement
+        int totalD = nomsFichiers.size(); // nombre de fichiers
+        int totalW = texteTraitee.get(index).length; // nombre de mots dans le fichier qu'on regarde actuellement
 
         double tf = tf(countW, totalW);
         double idf = idf(totalD, countDW);
