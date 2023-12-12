@@ -14,8 +14,8 @@ public class Main {
         ArrayList<String[]> texteTraitee = new ArrayList<>();
         ArrayList<String> nomsFichiers = new ArrayList<>();
 
-        texteTraitee = TraitementDeTexte.traiterText("src/main/dataset");
-        nomsFichiers = TraitementDeTexte.nomFichier("src/main/dataset");
+        texteTraitee = TraitementDeTexte.traiterText("src/main/dataset2");
+        nomsFichiers = TraitementDeTexte.nomFichier("src/main/dataset2");
 
         int i = 0;
 
@@ -53,7 +53,7 @@ public class Main {
         Search.setNomsFichiers(nomsFichiers);
         TF_IDF.setListes(nomsFichiers, texteTraitee);
 
-        BufferedReader br = new BufferedReader(new FileReader("src/main/query.txt"));
+        BufferedReader br = new BufferedReader(new FileReader("src/main/query2.txt"));
         String line;
 
         while ((line = br.readLine()) != null) {

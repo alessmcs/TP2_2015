@@ -3,6 +3,7 @@ import java.io.*;
 import edu.stanford.nlp.ling.*;
 import edu.stanford.nlp.pipeline.*;
 import java.util.*;
+import edu.stanford.nlp.util.logging.RedwoodConfiguration;
 
 import static edu.stanford.nlp.util.StringUtils.editDistance;
 
@@ -25,6 +26,7 @@ public class TraitementDeTexte {
                     Properties props = new Properties();
                     props.setProperty("annotators", "tokenize,pos,lemma");
                     props.setProperty("coref.algorithm", "neural");
+                    //RedwoodConfiguration.current().clear().apply();
                     StanfordCoreNLP pipeline = new StanfordCoreNLP(props); // create a document object
 
                     CoreDocument document = new CoreDocument(finalline); // annnotate the document
