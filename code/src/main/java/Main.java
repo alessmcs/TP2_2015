@@ -48,7 +48,9 @@ public class Main {
             for(String key2 : myMap.get(key).keySet() ){
                 System.out.println(key2 + ": " + myMap.get(key).get(key2) );
             }
+            //System.out.println(key2 + ": " + myMap.get(key).get(key2) )
         }
+
 
         Search.setNomsFichiers(nomsFichiers);
         TF_IDF.setListes(nomsFichiers, texteTraitee);
