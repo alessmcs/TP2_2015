@@ -17,7 +17,7 @@ public class Main {
         texteTraitee = TraitementDeTexte.traiterText("src/main/dataset2");
         nomsFichiers = TraitementDeTexte.nomFichier("src/main/dataset2");
 
-        int i = 0;
+            int i = 0;
 
         // Construire le WordMap & FileMap
         for (String nom : nomsFichiers) {
@@ -63,8 +63,22 @@ public class Main {
                 String[] tabCorrige = TraitementDeTexte.correction(tabMots);
                 Search.search(tabCorrige);
             }
+
+            else {
+                String mot = splitLine[5];
+                System.out.println(mot + " is " + AutoCompletion.occurenceMotInit(mot,texteTraitee));
+                ArrayList<ArrayList<String>> listePaire = AutoCompletion.init(texteTraitee);
+
+                String motSuivant = AutoCompletion.trouverMotSuivant(mot, listePaire, texteTraitee);
+                System.out.println("the most probable bigram of " + mot + " is " + motSuivant);
+
+            }
         }
 
+
+        System.out.println(texteTraitee);
+        ArrayList<ArrayList<String>> listePaire = AutoCompletion.init(texteTraitee);
+        System.out.println(listePaire);
     }
 
 }
