@@ -45,29 +45,40 @@ public class Main {
         Search.setNomsFichiers(nomsFichiers);
         TF_IDF.setListes(nomsFichiers, texteTraitee);
 
-        BufferedReader br = new BufferedReader(new FileReader("src/main/querytest.txt"));
-        FileWriter fw = new FileWriter("src/main/solution.txt");
+        PrintWriter writer = new PrintWriter("src/main/solution.txt");
+        writer.print("");
+        writer.close();
+
+        BufferedReader br = new BufferedReader(new FileReader("src/main/query.txt"));
+        FileWriter fw = new FileWriter("src/main/solution.txt", true);
         String line;
+
+        // effacer le contenu existant de solution.txt
+        PrintWriter writer2 = new PrintWriter("src/main/solution.txt");
+        writer.print("");
+        writer.close();
 
         while ((line = br.readLine()) != null) {
             String[] splitLine = line.split(" ");
             if (splitLine[0].equals("search")) {
                 String[] tabMots = Arrays.copyOfRange(splitLine, 1, splitLine.length);
                 String[] tabCorrige = TraitementDeTexte.correction(tabMots);
-                Search.search(tabCorrige);
-
+                String file = Search.search(tabCorrige);
+                fw.write(file + "\n");
+                fw.flush();
             } else {
                 String mot = splitLine[5];
                 ArrayList<ArrayList<String>> listePaire = AutoCompletion.init(texteTraitee);
                 String motSuivant = AutoCompletion.trouverMotSuivant(mot, listePaire, texteTraitee);
-
                 if (motSuivant != null) {
                     String result = "the most probable bigram of " + mot + " is " + motSuivant + "\n";
                     System.out.println(result);
-                    fw.write(result);
+                    fw.write(result + "\n");
+                    fw.flush();
                 }
             }
         }
+        fw.close();
     }
 
 }

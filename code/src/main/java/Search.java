@@ -31,8 +31,6 @@ public class Search {
             }
         }
 
-        //TODO: effacer print statement & remplacer par qqch qui écrit dans le fichier des résultats a partir de Main
-        // all good car search retourne juste le nom du fichier donc il suffit juste de l'écrire
         System.out.println(nomsFichiers.get(index));
         return nomsFichiers.get(index);
     }
