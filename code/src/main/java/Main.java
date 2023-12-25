@@ -1,5 +1,6 @@
-import java.io.*;
+// HAYS Oceane (20240742), MANCAS Alessandra (20249098)
 
+import java.io.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,8 +15,9 @@ public class Main {
         ArrayList<String[]> texteTraitee = new ArrayList<>();
         ArrayList<String> nomsFichiers = new ArrayList<>();
 
-        texteTraitee = TraitementDeTexte.traiterText("src/main/dataset");
-        nomsFichiers = TraitementDeTexte.nomFichier("src/main/dataset");
+        // Vous pouvez changer le dataset en changeant le path du dossier désiré
+        texteTraitee = TraitementDeTexte.traiterText("src/main/dataset2");
+        nomsFichiers = TraitementDeTexte.nomFichier("src/main/dataset2");
 
             int i = 0;
 
@@ -45,18 +47,16 @@ public class Main {
         Search.setNomsFichiers(nomsFichiers);
         TF_IDF.setListes(nomsFichiers, texteTraitee);
 
+        // effacer le contenu existant de solution.txt
         PrintWriter writer = new PrintWriter("src/main/solution.txt");
         writer.print("");
         writer.close();
 
-        BufferedReader br = new BufferedReader(new FileReader("src/main/query.txt"));
+        BufferedReader br = new BufferedReader(new FileReader("src/main/query2.txt"));
         FileWriter fw = new FileWriter("src/main/solution.txt", true);
         String line;
 
         // effacer le contenu existant de solution.txt
-        PrintWriter writer2 = new PrintWriter("src/main/solution.txt");
-        writer.print("");
-        writer.close();
 
         while ((line = br.readLine()) != null) {
             String[] splitLine = line.split(" ");
@@ -67,13 +67,14 @@ public class Main {
                 fw.write(file + "\n");
                 fw.flush();
             } else {
-                String mot = splitLine[5];
+                String[] mot = {splitLine[5]};
+                String motCorrige = TraitementDeTexte.correction(mot)[0];
                 ArrayList<ArrayList<String>> listePaire = AutoCompletion.init(texteTraitee);
-                String motSuivant = AutoCompletion.trouverMotSuivant(mot, listePaire, texteTraitee);
+                String motSuivant = AutoCompletion.trouverMotSuivant(motCorrige, listePaire, texteTraitee);
                 if (motSuivant != null) {
-                    String result = "the most probable bigram of " + mot + " is " + motSuivant + "\n";
+                    String result = mot[0] + " " + motSuivant + "\n";
                     System.out.println(result);
-                    fw.write(result + "\n");
+                    fw.write(result);
                     fw.flush();
                 }
             }

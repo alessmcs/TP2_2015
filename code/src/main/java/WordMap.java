@@ -36,8 +36,6 @@ public class WordMap<K,V> extends ChainHashMap<String, FileMaps<String, ArrayLis
 
     // fonction de compression
     public static int hashValue(String key){
-//        int a = 5; int b = 13;
-//        return ( (a*hashCode(key) + b)%p)%capacity; // MAD method
         return (int)( ( Math.abs( key.hashCode() * scale + shift ) % prime ) % capacity );
     }
 
