@@ -14,8 +14,8 @@ public class Main {
         ArrayList<String[]> texteTraitee = new ArrayList<>();
         ArrayList<String> nomsFichiers = new ArrayList<>();
 
-        texteTraitee = TraitementDeTexte.traiterText("src/main/dataset2");
-        nomsFichiers = TraitementDeTexte.nomFichier("src/main/dataset2");
+        texteTraitee = TraitementDeTexte.traiterText("src/main/dataset");
+        nomsFichiers = TraitementDeTexte.nomFichier("src/main/dataset");
 
             int i = 0;
 
@@ -42,43 +42,32 @@ public class Main {
             i++;
         }
 
-        //todo: effacer prints
-        for (String key : myMap.keySet()) {
-            System.out.println(key); // mot
-            for(String key2 : myMap.get(key).keySet() ){
-                System.out.println(key2 + ": " + myMap.get(key).get(key2) );
-            }
-        }
-
         Search.setNomsFichiers(nomsFichiers);
         TF_IDF.setListes(nomsFichiers, texteTraitee);
 
-        BufferedReader br = new BufferedReader(new FileReader("src/main/query2.txt"));
+        BufferedReader br = new BufferedReader(new FileReader("src/main/querytest.txt"));
+        FileWriter fw = new FileWriter("src/main/solution.txt");
         String line;
 
         while ((line = br.readLine()) != null) {
             String[] splitLine = line.split(" ");
-            if(splitLine[0].equals("search")){
+            if (splitLine[0].equals("search")) {
                 String[] tabMots = Arrays.copyOfRange(splitLine, 1, splitLine.length);
                 String[] tabCorrige = TraitementDeTexte.correction(tabMots);
                 Search.search(tabCorrige);
-            }
 
-            else {
+            } else {
                 String mot = splitLine[5];
-                System.out.println(mot + " is " + AutoCompletion.occurenceMotInit(mot,texteTraitee));
                 ArrayList<ArrayList<String>> listePaire = AutoCompletion.init(texteTraitee);
-
                 String motSuivant = AutoCompletion.trouverMotSuivant(mot, listePaire, texteTraitee);
-                System.out.println("the most probable bigram of " + mot + " is " + motSuivant);
 
+                if (motSuivant != null) {
+                    String result = "the most probable bigram of " + mot + " is " + motSuivant + "\n";
+                    System.out.println(result);
+                    fw.write(result);
+                }
             }
         }
-
-
-        System.out.println(texteTraitee);
-        ArrayList<ArrayList<String>> listePaire = AutoCompletion.init(texteTraitee);
-        System.out.println(listePaire);
     }
 
 }
